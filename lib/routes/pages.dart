@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:min_fitness/pages/home/view.dart';
 
 import 'routes.dart';
 
@@ -17,10 +18,11 @@ class AppPages {
     //   transitionDuration: Duration(milliseconds: 500),
     // ),
 
-    // GetPage(
-    //   name: AppRoutes.INITIAL,
-    //   transitionDuration: Duration(milliseconds: 500),
-    // ),
+    GetPage(
+      name: AppRoutes.INITIAL,
+      page: () => const HomePage(),
+      transitionDuration: Duration(milliseconds: 500),
+    ),
     // GetPage(
       // name: AppRoutes.HOME,
       // name: AppRoutes.HOME,
