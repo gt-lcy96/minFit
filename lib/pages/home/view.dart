@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:min_fitness/constants/colors.dart';
+import 'package:min_fitness/pages/home/widgets/line_chart.dart';
 import 'package:min_fitness/widgets/appIcon_text.dart';
 import 'package:min_fitness/widgets/colored_text.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -28,7 +30,16 @@ class HomePage extends StatelessWidget {
           Container(
             // margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             child: addExcerciseContent(),
-          )
+          ),
+          SizedBox(
+            height: 20.h
+          ),
+          ShadowedCard(
+            width: Get.width * 0.8,
+            height: 180,
+            paddingAll: 0,
+            child: LineChartSample2(),
+          ),
         ],
       ),
     );
