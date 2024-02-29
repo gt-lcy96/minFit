@@ -7,10 +7,13 @@ class ColoredText extends StatelessWidget {
       {super.key,
       required this.text,
       this.fontSize = 16,
-      this.color = AppColors.onSurfaceTextColor});
+      this.color = AppColors.onSurfaceTextColor,
+      this.fontWeight = FontWeight.normal
+      });
   final Color color;
   final String text;
   final double fontSize;
+  final FontWeight fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,8 @@ class ColoredText extends StatelessWidget {
       text,
       style: TextStyle(
         fontSize: fontSize.sp,
-        color: AppColors.onSurfaceTextColor,
+        fontWeight: fontWeight,
+        color: color,
       ),
     );
   }
