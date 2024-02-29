@@ -115,10 +115,27 @@ Widget addFoodContent(String title, List<dynamic> foodList) {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   String food = foodList[index]['food'] ?? '';
-                  return Text(food);
+                  String serving_size = foodList[index]['serving_size'] ?? '';
+                  String calories = foodList[index]['calories'].toString() ?? '';
+
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ColoredText(text: food, color: Colors.black, fontSize: 18, ),
+                          Text(serving_size),
+                        ],
+                      ),
+                      Text(calories),
+                    ],
+                  );
                 },
                 separatorBuilder: (context, index) => SizedBox(
-                  height: 5.h,
+                  height: 10.h,
                 ),
                 itemCount: foodList.length,
               ),
