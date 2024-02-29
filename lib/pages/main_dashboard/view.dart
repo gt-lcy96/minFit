@@ -6,8 +6,8 @@ import 'package:min_fitness/pages/main_dashboard/widgets/calories_content.dart';
 import 'package:min_fitness/pages/main_dashboard/widgets/line_chart.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class MainDashboardPage extends StatelessWidget {
+  const MainDashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {

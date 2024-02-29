@@ -20,7 +20,7 @@ class AppPages {
 
     GetPage(
       name: AppRoutes.INITIAL,
-      page: () => const HomePage(),
+      page: () => const MainFoodPage(),
       transitionDuration: Duration(milliseconds: 500),
     ),
     // GetPage(
