@@ -12,7 +12,8 @@ class FoodList {
     },
   ];
 
-  final List<dynamic> lunchList = [];
+  final List<dynamic> lunchList = [
+  ];
 
   final List<dynamic> dinnerList = [
     {
