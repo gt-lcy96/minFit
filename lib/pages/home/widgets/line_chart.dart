@@ -1,6 +1,7 @@
 // import 'package:fl_chart_app/presentation/resources/app_resources.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:min_fitness/constants/colors.dart';
 
 class LineChartSample2 extends StatefulWidget {
   const LineChartSample2({super.key});
@@ -19,7 +20,19 @@ class _LineChartSample2State extends State<LineChartSample2> {
 
   final Color mainGridLineColor = Colors.white10;
 
-  bool showAvg = false;
+  bool showAvg = true;
+
+  final double minX = 0;
+  final double maxX = 10;
+  late final List<FlSpot> lineBarData = [
+    FlSpot(minX, 2),
+    FlSpot(2.6, 2),
+    FlSpot(4.9, 2),
+    FlSpot(6.8, 3.1),
+    FlSpot(8, 4),
+    FlSpot(9.5, 4),
+    FlSpot(maxX, 5),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +48,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
               bottom: 12,
             ),
             child: LineChart(
-              showAvg ? avgData() : mainData(),
+              // showAvg ? avgData() : mainData(),
+              mainData(),
             ),
           ),
         ),
@@ -49,7 +63,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
               });
             },
             child: Text(
-              'avg',
+              'Wght',
               style: TextStyle(
                 fontSize: 12,
                 color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
@@ -65,17 +79,18 @@ class _LineChartSample2State extends State<LineChartSample2> {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 16,
+      color: AppColors.onSurfaceTextColor,
     );
     Widget text;
     switch (value.toInt()) {
       case 2:
-        text = const Text('MAR', style: style);
+        text = const Text('15/01', style: style);
         break;
       case 5:
-        text = const Text('JUN', style: style);
+        text = const Text('01/02', style: style);
         break;
       case 8:
-        text = const Text('SEP', style: style);
+        text = const Text('15/02', style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -92,17 +107,18 @@ class _LineChartSample2State extends State<LineChartSample2> {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 15,
+      color: AppColors.onSurfaceTextColor,
     );
     String text;
     switch (value.toInt()) {
       case 1:
-        text = '10K';
+        text = '70';
         break;
       case 3:
-        text = '30k';
+        text = '72';
         break;
       case 5:
-        text = '50k';
+        text = '74';
         break;
       default:
         return Container();
@@ -160,21 +176,13 @@ class _LineChartSample2State extends State<LineChartSample2> {
         show: true,
         border: Border.all(color: const Color(0xff37434d)),
       ),
-      minX: 0,
-      maxX: 11,
+      minX: minX,
+      maxX: maxX,
       minY: 0,
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
-          ],
+          spots: lineBarData,
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
