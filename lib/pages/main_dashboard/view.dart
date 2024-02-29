@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
-        // physics: const BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           // mainAxisAlignment: MainAxisAlignment.center,
