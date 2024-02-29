@@ -15,12 +15,19 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.center,
         // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             child: caloriesContent(),
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+          Container(
+            // margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            child: addExcerciseContent(),
           )
         ],
       ),
@@ -91,6 +98,38 @@ Widget caloriesContent() {
             ),
           ],
         ),
+      ],
+    ),
+  );
+}
+
+Widget addExcerciseContent() {
+  return ShadowedCard(
+    width: 200,
+    height: 150,
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ColoredText(text: 'Exercise'),
+            SizedBox(
+              height: 50.h,
+            ),
+            GestureDetector(
+                onTap: () {},
+                child: Icon(Icons.add, color: AppColors.onSurfaceTextColor)),
+          ],
+        ),
+        AppIconText(
+            icon: Icon(Icons.schedule, color: Colors.redAccent),
+            text: ColoredText(text: '00: 00 hr'),
+            spaceBetween: 10),
+        SizedBox(height: 5.h,),
+        AppIconText(
+            icon: Icon(Icons.local_fire_department, color: Colors.redAccent),
+            text: ColoredText(text: '0 cal'),
+            spaceBetween: 10),
       ],
     ),
   );
