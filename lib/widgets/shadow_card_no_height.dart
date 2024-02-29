@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:min_fitness/constants/colors.dart';
 
-class ShadowedCard extends StatelessWidget {
-  const ShadowedCard({
+class ShadowedCardNoHeight extends StatelessWidget {
+  const ShadowedCardNoHeight({
     super.key,
     required this.child,
-    this.height = 200,
     this.width = 200,
     this.radius = 20,
     this.paddingAll = 15,
@@ -14,8 +13,7 @@ class ShadowedCard extends StatelessWidget {
   });
 
   final Widget child;
-  final double? height;
-  final double? width;
+  final double width;
   final double radius;
   final double paddingAll;
   final Color backgroundColor;
@@ -24,8 +22,7 @@ class ShadowedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(paddingAll),
-        height: height,
-        width: width,
+        width: width.w,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(radius),

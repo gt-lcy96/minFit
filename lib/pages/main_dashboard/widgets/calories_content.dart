@@ -5,11 +5,13 @@ import 'package:min_fitness/constants/colors.dart';
 import 'package:min_fitness/widgets/appIcon_text.dart';
 import 'package:min_fitness/widgets/colored_text.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
+import 'package:min_fitness/widgets/shadow_card_no_height.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 Widget caloriesContent() {
-  return ShadowedCard(
-    width: Get.width * 0.8,
+  return ShadowedCardNoHeight(
+    width: (Get.width * 0.8).w,
+    // height: 200.h,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
