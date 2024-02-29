@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:min_fitness/pages/home/view.dart';
+import 'package:min_fitness/pages/main_dashboard/view.dart';
 
 import 'routes.dart';
 

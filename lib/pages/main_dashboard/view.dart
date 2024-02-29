@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:min_fitness/pages/home/widgets/addExercise_content.dart';
-import 'package:min_fitness/pages/home/widgets/calories_content.dart';
-import 'package:min_fitness/pages/home/widgets/line_chart.dart';
+import 'package:min_fitness/pages/main_dashboard/widgets/addExercise_content.dart';
+import 'package:min_fitness/pages/main_dashboard/widgets/calories_content.dart';
+import 'package:min_fitness/pages/main_dashboard/widgets/line_chart.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,12 +14,13 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
+        // physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+              margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               child: caloriesContent(),
             ),
             SizedBox(
