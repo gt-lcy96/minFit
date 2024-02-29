@@ -16,7 +16,7 @@ class ShadowedCard extends StatelessWidget {
         height: height.h,
         width: width.w,
         decoration: BoxDecoration(
-          color: AppColors.onSurfaceTextColor,
+          color: AppColors.primaryDarkColorDark,
           borderRadius: BorderRadius.circular(radius),
           boxShadow: [
             BoxShadow(
