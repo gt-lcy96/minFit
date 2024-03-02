@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:min_fitness/constants/colors.dart';
 import 'package:min_fitness/models/exercise_model.dart';
 import 'package:min_fitness/widgets/colored_text.dart';
+import 'package:min_fitness/widgets/tag.dart';
 
 class ExerciseCard extends StatelessWidget {
   const ExerciseCard({
@@ -60,20 +61,4 @@ class ExerciseCard extends StatelessWidget {
           ],
         ));
   }
-}
-
-Widget tag(String text, Color color) {
-  return ConstrainedBox(
-    constraints: BoxConstraints(
-      maxWidth: 180.w,
-    ),
-    child: Container(
-      padding: EdgeInsets.all(5.w),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(text, overflow: TextOverflow.clip),
-    ),
-  );
 }
