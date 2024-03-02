@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:min_fitness/constants/colors.dart';
 import 'package:min_fitness/mock_data/exercise_list.dart';
+import 'package:min_fitness/models/exercise_model.dart';
+import 'package:min_fitness/widgets/exercise_card.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
 
 class Workout extends StatelessWidget {
@@ -20,11 +24,8 @@ class Workout extends StatelessWidget {
               mainAxisSpacing: 10,
               crossAxisCount: 2,
               children: ExerciseList().exercises.map((exercise) {
-
-                return ShadowedCard(
-                    backgroundColor: AppColors.onSurfaceTextColor,
-                    child: networkImage(
-                        exercise['gifUrl']));
+                final exerciseContent = ExerciseModel.fromJson(json.encode(exercise));
+                return ExerciseCard(content:exerciseContent);
               }).toList(),
             ),
           )
