@@ -16,6 +16,7 @@ class ExerciseController extends GetxController {
     super.onReady();
     _bodyPartList = await getBodyParts();
     _isLoaded = true;
+    update();
     print("_isLoaded:  ${_isLoaded}");
 
   }
@@ -23,7 +24,7 @@ class ExerciseController extends GetxController {
   // ignore: non_constant_identifier_names
   Future<List<BodyPartModel>> getBodyParts() async {
     _isLoaded = false;
-    // await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 1));
     return BodyPart().bodyPartList.map((e) => BodyPartModel.fromJson(json.encode(e))).toList();
   }
 }
