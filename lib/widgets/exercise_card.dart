@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:min_fitness/constants/colors.dart';
+import 'package:min_fitness/constants/constant.dart';
 import 'package:min_fitness/models/exercise_model.dart';
 import 'package:min_fitness/widgets/colored_text.dart';
 import 'package:min_fitness/widgets/tag.dart';
@@ -35,7 +36,7 @@ class ExerciseCard extends StatelessWidget {
           image: DecorationImage(
             image: FadeInImage.assetNetwork(
               placeholder: 'assets/images/loading1.jpeg',
-              image: content.gifUrl,
+              image: '${AppConstant.BASE_URL}/api/exercise/static/gifs/${content.gifUrl}',
             ).image,
             fit: BoxFit.cover,
           ),

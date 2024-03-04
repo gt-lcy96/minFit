@@ -35,6 +35,7 @@ class _WorkoutSliderState extends State<WorkoutSlider> {
                           setState(() {
                             currentIndex = index.toDouble();
                           });
+                          exerciseController.setSliderIndex(index);
                         }),
                     itemBuilder: (BuildContext context, int itemIndex,
                             int pageViewIndex) =>

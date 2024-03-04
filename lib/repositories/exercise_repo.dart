@@ -9,6 +9,7 @@ class ExerciseRepo {
     ExerciseRepo({required this.apiClient});
 
     Future<Response> getExerciseList() async {
-      return await apiClient.getData(AppConstant.BASE_URL + 'api/exercise/exercise_list');
+      Response data = await apiClient.getData('/api/exercise/exercise_list');
+      return data; 
     }
 }

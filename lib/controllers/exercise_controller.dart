@@ -12,6 +12,9 @@ class ExerciseController extends GetxController {
   final ExerciseRepo exerciseRepo;
   ExerciseController({required this.exerciseRepo});
 
+  int _slider_index = 0;
+  int get slider_index => _slider_index;
+
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
 
@@ -32,6 +35,11 @@ class ExerciseController extends GetxController {
 
   }
 
+  void setSliderIndex(int index) {
+    _slider_index = index;
+    update();
+  }
+
   // ignore: non_constant_identifier_names
   Future<List<BodyPartModel>> getBodyParts() async {
     _isLoaded = false;
@@ -39,12 +47,24 @@ class ExerciseController extends GetxController {
     return BodyPart().bodyPartList.map((e) => BodyPartModel.fromJson(json.encode(e))).toList();
   }
 
-  Future<List<ExerciseModel>?> getExerciseList() async {
+  Future<List<ExerciseModel>> getExerciseList() async {
     try {
 
       Response response = await exerciseRepo.getExerciseList();
       if(response.statusCode == 200) {
-        return response.body;
+        final List<dynamic> jsonResponse = response.body is String
+        ? json.decode(response.body)
+        : response.body;
+
+        print("response.body.runtimeType:  ${response.body.runtimeType}");
+        // List<dynamic> exerciseList = json.decode(response.body);
+        // List<ExerciseModel>
+        final exerciseList = jsonResponse.map((e)  {
+          // print("e.runtimeType:  ${e.runtimeType}");
+          return ExerciseModel.fromMap(e as Map<String, dynamic>);}).toList();
+
+        print("exerciseList.runtimeType:  ${exerciseList.runtimeType}");
+        return exerciseList;
       } else {
         if(kDebugMode) {
           print('Failed to getExerciseList from server');
@@ -53,6 +73,7 @@ class ExerciseController extends GetxController {
       }
     } catch (e) {
         print('Exeption occurs: ${e}');
+        return [];
     }
   }
 }
