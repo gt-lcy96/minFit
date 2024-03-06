@@ -9,6 +9,7 @@ import 'package:min_fitness/constants/colors.dart';
 import 'package:min_fitness/controllers/exercise_controller.dart';
 import 'package:min_fitness/mock_data/exercise_list.dart';
 import 'package:min_fitness/models/exercise_model.dart';
+import 'package:min_fitness/pages/workout_page/equipment_dropdown.dart';
 import 'package:min_fitness/pages/workout_page/workout_slider.dart';
 import 'package:min_fitness/widgets/exercise_card.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
@@ -29,60 +30,18 @@ class Workout extends StatelessWidget {
                   left: 20,
                   right: 20,
                   child: SearchField()),
+              //DropDown Left
               Positioned(
                 top: Get.height * 0.11,
                 left: 20,
-                child: ShadowedCard(
-                  height: Get.height * 0.06,
-                  width: Get.width *0.42,
-                  backgroundColor: AppColors.onSurfaceTextColor,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: DropdownButton<String>(
-                      value: 'Option 1',
-                      onChanged: (String? value) {},
-                      items: ['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
+                child: EquipmentDropDownButton(),
               ),
-              Positioned(
-                top: Get.height * 0.11,
-                right: 20,
-                child: ShadowedCard(
-                  height: Get.height * 0.06,
-                  width: Get.width *0.42,
-                  backgroundColor: AppColors.onSurfaceTextColor,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: DropdownButton<String>(
-                      value: 'Option 1',
-                      onChanged: (String? value) {},
-                      items: ['Option 1', 'Option 2', 'Option 3', 'Option 4']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ),
+              //DropDown Right
+              // Positioned(
+              //   top: Get.height * 0.11,
+              //   right: 20,
+              //   child: DropDownButton(),
+              // ),
               // Slider
               Positioned(
                   top: Get.height * 0.19,

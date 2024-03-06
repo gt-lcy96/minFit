@@ -15,8 +15,14 @@ class ExerciseController extends GetxController {
   int _slider_index = 0;
   int get slider_index => _slider_index;
 
+  late String _selected_equipment;
+  String get selected_equipment => _selected_equipment;
+
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
+
+  bool _equipmentIsSelected = false;
+  bool get equipmentIsSelected => _equipmentIsSelected;
 
   late List<BodyPartModel> _bodyPartList = [];
   List<BodyPartModel> get bodyPartList => _bodyPartList;
@@ -32,6 +38,8 @@ class ExerciseController extends GetxController {
     super.onReady();
     _bodyPartList = await getBodyParts();
     _exerciseList = await getExerciseList();
+    await searchExerciseDisplayList('chest');
+    // _selected_equipment = _exerciseDisplayList![0].equipment;
     _isLoaded = true;
     update();
     print("_isLoaded:  ${_isLoaded}");
@@ -39,6 +47,7 @@ class ExerciseController extends GetxController {
 
   Future<void> searchExerciseDisplayList(String keyword) async {
     _isLoaded = false;
+    _equipmentIsSelected = false;
     update();
     Response response = await exerciseRepo.searchExerciseDisplayList(keyword);
 
@@ -50,6 +59,7 @@ class ExerciseController extends GetxController {
       final exerciseList =
           jsonResponse.map((e) => ExerciseModel.fromMap(e)).toList();
       _exerciseDisplayList = exerciseList as List<ExerciseModel>;
+      setSelectedEquipment(_exerciseDisplayList![0].equipment);
       _isLoaded = true;
       update();
     } else {
@@ -62,11 +72,23 @@ class ExerciseController extends GetxController {
   }
 
   void setSliderIndex(int index) {
+    _equipmentIsSelected = false;
+    _isLoaded = false;
+
     _slider_index = index;
     _exerciseDisplayList = _exerciseList!
         .where(
             (ExerciseModel e) => e.bodyPart == bodyPartList[_slider_index].name)
         .toList();
+    setSelectedEquipment(_exerciseDisplayList![0].equipment);
+
+    _isLoaded = true;
+    update();
+  }
+
+  void setSelectedEquipment(String value) {
+    _selected_equipment = value;
+    _equipmentIsSelected = true;
     update();
   }
 
