@@ -85,7 +85,7 @@ class Workout extends StatelessWidget {
               ),
               // Slider
               Positioned(
-                  top: Get.width * 0.4,
+                  top: Get.height * 0.19,
                   left: 20,
                   right: 20,
                   child: ShadowedCard(
