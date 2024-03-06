@@ -23,14 +23,69 @@ class Workout extends StatelessWidget {
         child: GetBuilder<ExerciseController>(builder: (exerciseController) {
           return Stack(
             children: [
+              // Search Field
               Positioned(
-                  top: Get.width * 0.1,
+                  top: Get.height * 0.03,
                   left: 20,
                   right: 20,
                   child: SearchField()),
+              Positioned(
+                top: Get.height * 0.11,
+                left: 20,
+                child: ShadowedCard(
+                  height: Get.height * 0.06,
+                  width: Get.width *0.42,
+                  backgroundColor: AppColors.onSurfaceTextColor,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: DropdownButton<String>(
+                      value: 'Option 1',
+                      onChanged: (String? value) {},
+                      items: ['Option 1', 'Option 2', 'Option 3', 'Option 4']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: Get.height * 0.11,
+                right: 20,
+                child: ShadowedCard(
+                  height: Get.height * 0.06,
+                  width: Get.width *0.42,
+                  backgroundColor: AppColors.onSurfaceTextColor,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: DropdownButton<String>(
+                      value: 'Option 1',
+                      onChanged: (String? value) {},
+                      items: ['Option 1', 'Option 2', 'Option 3', 'Option 4']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ),
               // Slider
               Positioned(
-                  top: Get.width * 0.3,
+                  top: Get.width * 0.4,
                   left: 20,
                   right: 20,
                   child: ShadowedCard(
@@ -41,6 +96,8 @@ class Workout extends StatelessWidget {
                       child: WorkoutSlider(),
                     ),
                   )),
+
+              //Card Grid
               Positioned(
                 bottom: 0.h,
                 child: Container(
@@ -57,12 +114,6 @@ class Workout extends StatelessWidget {
                     crossAxisCount: 2,
                     children: exerciseController.isLoaded
                         ? exerciseController.exerciseDisplayList!
-                            // .where((ExerciseModel e) =>
-                            //     e.bodyPart ==
-                            //     exerciseController
-                            //         .bodyPartList[
-                            //             exerciseController.slider_index]
-                            //         .name)
                             .map((exercise) {
                             return ExerciseCard(content: exercise);
                           }).toList()
