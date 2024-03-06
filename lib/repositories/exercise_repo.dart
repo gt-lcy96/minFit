@@ -12,4 +12,9 @@ class ExerciseRepo {
       Response data = await apiClient.getData('/api/exercise/exercise_list');
       return data; 
     }
+
+    Future<Response> searchExerciseDisplayList(keyword) async {
+      Response data = await apiClient.postData('/api/exercise/search_exercise_name', {'keyword': keyword});
+      return data;
+    }
 }

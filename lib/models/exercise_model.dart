@@ -63,13 +63,13 @@ class ExerciseModel {
       other.target == target;
   }
 
-  @override
-  int get hashCode {
-    return bodyPart.hashCode ^
-      equipment.hashCode ^
-      gifUrl.hashCode ^
-      id.hashCode ^
-      name.hashCode ^
-      target.hashCode;
-  }
+  // @override
+  // int get hashCode {
+  //   return bodyPart.hashCode ^
+  //     equipment.hashCode ^
+  //     gifUrl.hashCode ^
+  //     id.hashCode ^
+  //     name.hashCode ^
+  //     target.hashCode;
+  // }
 }

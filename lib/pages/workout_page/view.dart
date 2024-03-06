@@ -38,17 +38,14 @@ class Workout extends StatelessWidget {
                     mainAxisSpacing: 10,
                     crossAxisCount: 2,
                     children: exerciseController.isLoaded
-                        ? exerciseController.exerciseList!
-                            .where((ExerciseModel e) =>
-                                e.bodyPart ==
-                                exerciseController
-                                    .bodyPartList[
-                                        exerciseController.slider_index]
-                                    .name)
+                        ? exerciseController.exerciseDisplayList!
+                            // .where((ExerciseModel e) =>
+                            //     e.bodyPart ==
+                            //     exerciseController
+                            //         .bodyPartList[
+                            //             exerciseController.slider_index]
+                            //         .name)
                             .map((exercise) {
-                            // print("exercise:  ${exercise}");
-                            // final exerciseContent =
-                            //     ExerciseModel.fromJson(json.encode(exercise));
                             return ExerciseCard(content: exercise);
                           }).toList()
                         : [CircularProgressIndicator()],
@@ -71,13 +68,7 @@ class Workout extends StatelessWidget {
                   top: Get.width * 0.1,
                   left: 20,
                   right: 20,
-                  child: ShadowedCard(
-                    height: 60,
-                    width: Get.width * 0.8,
-                    child: Container(),
-                    // child: Center(child: Text('Search')),
-                    backgroundColor: Colors.white,
-                  ))
+                  child: SearchField())
             ],
           );
         }),
@@ -107,4 +98,37 @@ Widget networkImage(String imgUrl) {
       return Text('Image could not be loaded.');
     },
   );
+}
+
+Widget SearchField() {
+  final TextEditingController _textController = TextEditingController();
+  return GetBuilder<ExerciseController>(builder: (exerciseController) {
+    return ShadowedCard(
+      height: 60,
+      width: Get.width * 0.8,
+      // child: Center(child: Text('Search')),
+      backgroundColor: Colors.white,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: Get.width * 0.8),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Expanded(
+            child: TextField(
+              controller: _textController,
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              exerciseController
+                  .searchExerciseDisplayList(_textController.text);
+            },
+            child: Icon(Icons.search),
+          ),
+        ]),
+      ),
+    );
+  });
 }
