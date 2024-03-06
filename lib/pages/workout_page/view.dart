@@ -24,6 +24,24 @@ class Workout extends StatelessWidget {
           return Stack(
             children: [
               Positioned(
+                  top: Get.width * 0.1,
+                  left: 20,
+                  right: 20,
+                  child: SearchField()),
+              // Slider
+              Positioned(
+                  top: Get.width * 0.3,
+                  left: 20,
+                  right: 20,
+                  child: ShadowedCard(
+                    height: Get.height * 0.25,
+                    backgroundColor:
+                        AppColors.primaryLightColor.withOpacity(0.4),
+                    child: Container(
+                      child: WorkoutSlider(),
+                    ),
+                  )),
+              Positioned(
                 bottom: 0.h,
                 child: Container(
                   decoration: BoxDecoration(
@@ -52,23 +70,6 @@ class Workout extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                  top: Get.width * 0.3,
-                  left: 20,
-                  right: 20,
-                  child: ShadowedCard(
-                    height: Get.height * 0.25,
-                    backgroundColor:
-                        AppColors.primaryLightColor.withOpacity(0.4),
-                    child: Container(
-                      child: WorkoutSlider(),
-                    ),
-                  )),
-              Positioned(
-                  top: Get.width * 0.1,
-                  left: 20,
-                  right: 20,
-                  child: SearchField())
             ],
           );
         }),
