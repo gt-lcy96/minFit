@@ -55,6 +55,12 @@ class ExerciseController extends GetxController {
     print("_isLoaded:  ${_isLoaded}");
   }
 
+  ExerciseModel? getExerciseDetailByID(String id) {
+    final exerciseDetail =
+        _exerciseList!.where((element) => element.id == id).first;
+    return exerciseDetail;
+  }
+
   filterDisplayList({String? equipmentValue, String? targetValue}) {
     _isLoaded = false;
     update();
@@ -79,7 +85,7 @@ class ExerciseController extends GetxController {
     update();
     Response response = await exerciseRepo.searchExerciseDisplayList(keyword);
 
-    prettyPrintJson(response.body, prefix: 'response.body');
+    // prettyPrintJson(response.body, prefix: 'response.body');
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body) as List;

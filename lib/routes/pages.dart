@@ -31,7 +31,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.WORKOUT_DETAIL,
       page: () {
-        var id = Get.parameters['id'];
+        final String id = Get.parameters['id'] as String;
         return WorkoutDetail(id: id);
       },
     )

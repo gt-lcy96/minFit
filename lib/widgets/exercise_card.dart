@@ -32,7 +32,7 @@ class ExerciseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(AppPages.getWorkoutDetail(content.id));
+        Get.toNamed(AppPages.getWorkoutDetail(content.id as String));
       },
       child: Container(
           padding: EdgeInsets.all(paddingAll),
