@@ -34,8 +34,7 @@ class TargetDropDownButton extends StatelessWidget {
       return controller.targetIsSelected
           ? ShadowedCard(
               height: Get.height * 0.06,
-              // width: Get.width * 0.42,
-              width: Get.width * 0.45,
+              width: Get.width * 0.42,
               backgroundColor: AppColors.onSurfaceTextColor,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
