@@ -33,6 +33,9 @@ class ExerciseController extends GetxController {
   late List<ExerciseModel>? _exerciseDisplayList = [];
   List<ExerciseModel>? get exerciseDisplayList => _exerciseDisplayList;
 
+  late List<ExerciseModel>? _filteredExerciseDisplayList = [];
+  List<ExerciseModel>? get filteredExerciseDisplayList => _filteredExerciseDisplayList;
+
   @override
   onReady() async {
     super.onReady();
@@ -43,6 +46,14 @@ class ExerciseController extends GetxController {
     _isLoaded = true;
     update();
     print("_isLoaded:  ${_isLoaded}");
+  }
+
+  filterEquipmentDisplayList(String dropdownValue) {
+    _isLoaded = false;
+    update();
+    _filteredExerciseDisplayList = _exerciseDisplayList!.where((e) => e.equipment == dropdownValue).toList();
+    _isLoaded = true;
+    update();
   }
 
   Future<void> searchExerciseDisplayList(String keyword) async {
@@ -88,6 +99,7 @@ class ExerciseController extends GetxController {
 
   void setSelectedEquipment(String value) {
     _selected_equipment = value;
+    filterEquipmentDisplayList(value);
     _equipmentIsSelected = true;
     update();
   }

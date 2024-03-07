@@ -36,7 +36,7 @@ class EquipmentDropDownButton extends StatelessWidget {
           ? ShadowedCard(
               height: Get.height * 0.06,
               // width: Get.width * 0.42,
-              width: Get.width * 0.9,
+              width: Get.width * 0.45,
               backgroundColor: AppColors.onSurfaceTextColor,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),

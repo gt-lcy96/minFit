@@ -22,6 +22,9 @@ class Workout extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<ExerciseController>(builder: (exerciseController) {
+          var filteredExerciseDisplayList = exerciseController.filteredExerciseDisplayList;
+          var currentExerciseDisplayList = filteredExerciseDisplayList!.isNotEmpty ? filteredExerciseDisplayList : exerciseController.exerciseDisplayList;
+
           return Stack(
             children: [
               // Search Field
@@ -72,7 +75,7 @@ class Workout extends StatelessWidget {
                     mainAxisSpacing: 10,
                     crossAxisCount: 2,
                     children: exerciseController.isLoaded
-                        ? exerciseController.exerciseDisplayList!
+                        ? currentExerciseDisplayList!
                             .map((exercise) {
                             return ExerciseCard(content: exercise);
                           }).toList()
