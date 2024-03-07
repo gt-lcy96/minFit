@@ -54,7 +54,7 @@ class ExerciseCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-                tag(content.bodyPart, Colors.yellow.withOpacity(0.5)),
+                tag(content.equipment, Colors.yellow.withOpacity(0.5)),
                 SizedBox(
                   width: 5.w,
                 ),
