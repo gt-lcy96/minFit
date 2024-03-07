@@ -10,6 +10,7 @@ import 'package:min_fitness/controllers/exercise_controller.dart';
 import 'package:min_fitness/mock_data/exercise_list.dart';
 import 'package:min_fitness/models/exercise_model.dart';
 import 'package:min_fitness/pages/workout_page/equipment_dropdown.dart';
+import 'package:min_fitness/pages/workout_page/target_dropdown.dart';
 import 'package:min_fitness/pages/workout_page/workout_slider.dart';
 import 'package:min_fitness/widgets/exercise_card.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
@@ -40,11 +41,11 @@ class Workout extends StatelessWidget {
                 child: EquipmentDropDownButton(),
               ),
               //DropDown Right
-              // Positioned(
-              //   top: Get.height * 0.11,
-              //   right: 20,
-              //   child: DropDownButton(),
-              // ),
+              Positioned(
+                top: Get.height * 0.11,
+                right: 20,
+                child: TargetDropDownButton(),
+              ),
               // Slider
               Positioned(
                   top: Get.height * 0.19,

@@ -18,11 +18,17 @@ class ExerciseController extends GetxController {
   late String _selected_equipment;
   String get selected_equipment => _selected_equipment;
 
+  late String _selected_target;
+  String get selected_target => _selected_target;
+
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
 
   bool _equipmentIsSelected = false;
   bool get equipmentIsSelected => _equipmentIsSelected;
+
+  bool _targetIsSelected = false;
+  bool get targetIsSelected => _targetIsSelected;
 
   late List<BodyPartModel> _bodyPartList = [];
   List<BodyPartModel> get bodyPartList => _bodyPartList;
@@ -34,7 +40,8 @@ class ExerciseController extends GetxController {
   List<ExerciseModel>? get exerciseDisplayList => _exerciseDisplayList;
 
   late List<ExerciseModel>? _filteredExerciseDisplayList = [];
-  List<ExerciseModel>? get filteredExerciseDisplayList => _filteredExerciseDisplayList;
+  List<ExerciseModel>? get filteredExerciseDisplayList =>
+      _filteredExerciseDisplayList;
 
   @override
   onReady() async {
@@ -48,10 +55,19 @@ class ExerciseController extends GetxController {
     print("_isLoaded:  ${_isLoaded}");
   }
 
-  filterEquipmentDisplayList(String dropdownValue) {
+  filterDisplayList({String? equipmentValue, String? targetValue}) {
     _isLoaded = false;
     update();
-    _filteredExerciseDisplayList = _exerciseDisplayList!.where((e) => e.equipment == dropdownValue).toList();
+    if (equipmentValue != null) {
+      _filteredExerciseDisplayList = _exerciseDisplayList!
+          .where((e) => e.equipment == equipmentValue)
+          .toList();
+    }
+
+    if (targetValue != null) {
+      _filteredExerciseDisplayList =
+          _exerciseDisplayList!.where((e) => e.target == targetValue).toList();
+    }
     _isLoaded = true;
     update();
   }
@@ -59,6 +75,7 @@ class ExerciseController extends GetxController {
   Future<void> searchExerciseDisplayList(String keyword) async {
     _isLoaded = false;
     _equipmentIsSelected = false;
+    _targetIsSelected = false;
     update();
     Response response = await exerciseRepo.searchExerciseDisplayList(keyword);
 
@@ -71,6 +88,7 @@ class ExerciseController extends GetxController {
           jsonResponse.map((e) => ExerciseModel.fromMap(e)).toList();
       _exerciseDisplayList = exerciseList as List<ExerciseModel>;
       setSelectedEquipment(_exerciseDisplayList![0].equipment);
+      setSelectedTarget(_exerciseDisplayList![0].target);
       _isLoaded = true;
       update();
     } else {
@@ -83,6 +101,7 @@ class ExerciseController extends GetxController {
   }
 
   void setSliderIndex(int index) {
+    _targetIsSelected = false;
     _equipmentIsSelected = false;
     _isLoaded = false;
 
@@ -92,6 +111,7 @@ class ExerciseController extends GetxController {
             (ExerciseModel e) => e.bodyPart == bodyPartList[_slider_index].name)
         .toList();
     setSelectedEquipment(_exerciseDisplayList![0].equipment);
+    setSelectedTarget(_exerciseDisplayList![0].target);
 
     _isLoaded = true;
     update();
@@ -99,8 +119,15 @@ class ExerciseController extends GetxController {
 
   void setSelectedEquipment(String value) {
     _selected_equipment = value;
-    filterEquipmentDisplayList(value);
+    filterDisplayList(equipmentValue: value);
     _equipmentIsSelected = true;
+    update();
+  }
+
+  void setSelectedTarget(String value) {
+    _selected_target = value;
+    filterDisplayList(targetValue: value);
+    _targetIsSelected = true;
     update();
   }
 
