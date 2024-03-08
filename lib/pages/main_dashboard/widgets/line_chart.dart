@@ -3,14 +3,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:min_fitness/constants/colors.dart';
 
-class LineChartSample2 extends StatefulWidget {
-  const LineChartSample2({super.key});
+class LineChartWeight extends StatefulWidget {
+  const LineChartWeight({super.key});
 
   @override
-  State<LineChartSample2> createState() => _LineChartSample2State();
+  State<LineChartWeight> createState() => LineChartWeightState();
 }
 
-class _LineChartSample2State extends State<LineChartSample2> {
+class LineChartWeightState extends State<LineChartWeight> {
   List<Color> gradientColors = [
     // AppColors.contentColorCyan,
     // AppColors.contentColorBlue,
