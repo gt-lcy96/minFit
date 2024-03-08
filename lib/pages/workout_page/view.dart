@@ -68,7 +68,7 @@ class Workout extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   width: Get.width,
-                  height: Get.height * 0.4,
+                  height: Get.height * 0.35,
                   child: GridView.count(
                     primary: false,
                     padding: const EdgeInsets.all(20),
