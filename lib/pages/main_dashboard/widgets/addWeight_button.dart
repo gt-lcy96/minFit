@@ -97,31 +97,3 @@ TextStyle titleStyle() {
 TextStyle descriptionStyle() {
   return TextStyle(color: Colors.blue, fontWeight: FontWeight.bold);
 }
-
-Widget textRow(String title, String description) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Container(
-        width: Get.width * 0.3,
-        child: Text(
-          title,
-          overflow: TextOverflow.clip,
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-      ),
-      Container(
-        width: Get.width * 0.4,
-        child: Text(
-          description,
-          overflow: TextOverflow.clip,
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-      ),
-    ],
-  );
-}
