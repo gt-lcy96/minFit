@@ -34,7 +34,7 @@ class AppPages {
         final String id = Get.parameters['id'] as String;
         return WorkoutDetail(id: id);
       },
-    )
+    ),
 
 
     // GetPage(
