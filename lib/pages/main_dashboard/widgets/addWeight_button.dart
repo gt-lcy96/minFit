@@ -26,6 +26,8 @@ Widget addWeightButton(BuildContext context) {
 }
 
 Widget weightBottomSheet(BuildContext context) {
+  TextEditingController textController = TextEditingController();
+
   return GetBuilder<WeightController>(builder: (controller) {
     final date = DateFormat('d MMMM yyyy').format(controller.created_at);
     return Container(
@@ -78,11 +80,15 @@ Widget weightBottomSheet(BuildContext context) {
                         Container(
                           width: 40.w,
                           child: TextField(
+                            controller: textController,
+                            onChanged: (String text) {
+                              controller
+                                  .setWeight(double.parse(textController.text));
+                            },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              hintText: controller.weight.toString(),
-                              border: InputBorder.none
-                            ),
+                                hintText: controller.weight.toString(),
+                                border: InputBorder.none),
                           ),
                         ),
                         // Text('75', style: descriptionStyle()),
