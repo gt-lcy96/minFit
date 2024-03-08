@@ -8,6 +8,7 @@ class ExerciseModel {
   String id;
   String name;
   String target;
+  double metValue;
 
   ExerciseModel({
     required this.bodyPart,
@@ -16,6 +17,7 @@ class ExerciseModel {
     required this.id,
     required this.name,
     required this.target,
+    required this.metValue,
   });
 
 
@@ -27,6 +29,7 @@ class ExerciseModel {
       'id': id,
       'name': name,
       'target': target,
+      'metValue': metValue,
     };
   }
 
@@ -38,6 +41,7 @@ class ExerciseModel {
       id: map['id'] as String,
       name: map['name'] as String,
       target: map['target'] as String,
+      metValue: map['metValue'] as double,
     );
   }
 
@@ -47,7 +51,7 @@ class ExerciseModel {
 
   @override
   String toString() {
-    return 'ExerciseModel(bodyPart: $bodyPart, equipment: $equipment, gifUrl: $gifUrl, id: $id, name: $name, target: $target)';
+    return 'ExerciseModel(bodyPart: $bodyPart, equipment: $equipment, gifUrl: $gifUrl, id: $id, name: $name, target: $target, metValue: $metValue)';
   }
 
   @override
@@ -60,7 +64,8 @@ class ExerciseModel {
       other.gifUrl == gifUrl &&
       other.id == id &&
       other.name == name &&
-      other.target == target;
+      other.target == target &&
+      other.metValue == metValue;
   }
 
   @override
@@ -70,6 +75,27 @@ class ExerciseModel {
       gifUrl.hashCode ^
       id.hashCode ^
       name.hashCode ^
-      target.hashCode;
+      target.hashCode ^
+      metValue.hashCode;
+  }
+
+  ExerciseModel copyWith({
+    String? bodyPart,
+    String? equipment,
+    String? gifUrl,
+    String? id,
+    String? name,
+    String? target,
+    double? metValue,
+  }) {
+    return ExerciseModel(
+      bodyPart: bodyPart ?? this.bodyPart,
+      equipment: equipment ?? this.equipment,
+      gifUrl: gifUrl ?? this.gifUrl,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      target: target ?? this.target,
+      metValue: metValue ?? this.metValue,
+    );
   }
 }
