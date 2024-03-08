@@ -42,7 +42,7 @@ class MainDashboardPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      addWeightButton(),
+                      addWeightButton(context),
                     ],
                   ),
                   LineChartWeight(),
