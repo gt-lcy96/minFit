@@ -35,9 +35,9 @@ Widget addExcerciseContent() {
           SizedBox(
             height: 5.h,
           ),
-          const AppIconText(
+          AppIconText(
               icon: Icon(Icons.local_fire_department, color: Colors.redAccent),
-              text: ColoredText(text: '0 cal'),
+              text: ColoredText(text: '${controller.calories.toStringAsFixed(0)} cal'),
               spaceBetween: 10),
         ],
       ),

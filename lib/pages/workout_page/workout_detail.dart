@@ -115,7 +115,7 @@ class WorkoutDetail extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  AddExerciseButton(context),
+                                  AddExerciseButton(context, exercise_detail),
                                 ],
                               ),
                             )
@@ -170,10 +170,10 @@ Widget textRow(String title, String description) {
   );
 }
 
-Widget AddExerciseButton(BuildContext context) {
+Widget AddExerciseButton(BuildContext context, ExerciseModel exercise_detail) {
   return InkWell(
     onTap: () {
-      pick_time(context);
+      pick_time(context, exercise_detail);
     },
     child: Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 60.w),
@@ -199,7 +199,7 @@ Widget AddExerciseButton(BuildContext context) {
   );
 }
 
-pick_time(BuildContext context) {
+pick_time(BuildContext context, ExerciseModel exercise_detail) {
   BottomPicker.time(
     title: 'Select your exercise time',
     titleStyle: TextStyle(
@@ -211,6 +211,16 @@ pick_time(BuildContext context) {
       final minute = Duration(minutes: (datetime as DateTime).minute);
       final totolHour = (Duration(hours: (datetime as DateTime).hour) + minute);
       Get.find<ExerciseController>().exerciseDuration = totolHour;
+      Get.find<ExerciseController>().calories = exercise_detail.metValue *
+          Get.find<WeightController>().weight *
+          (totolHour.inMinutes / 60);
+      Get.snackbar(
+                'Success Added',
+                'Exercise Duration Is Successfully Added',
+                backgroundColor: Colors.green, // Optional: set background color
+                colorText: Colors.white, // Optional: set text color
+                duration: Duration(seconds: 2), // Optional: set duration
+              );
     },
     onClose: () {
       print('Picker closed');
