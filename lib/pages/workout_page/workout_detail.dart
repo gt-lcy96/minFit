@@ -228,7 +228,7 @@ pick_time(BuildContext context, ExerciseModel exercise_detail) {
     bottomPickerTheme: BottomPickerTheme.orange,
     use24hFormat: true,
     initialTime: Time(
-      minutes: 23,
+      minutes: 30,
     ),
     maxTime: Time(
       hours: 23,
