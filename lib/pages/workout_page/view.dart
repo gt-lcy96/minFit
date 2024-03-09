@@ -23,8 +23,12 @@ class Workout extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<ExerciseController>(builder: (exerciseController) {
-          var filteredExerciseDisplayList = exerciseController.filteredExerciseDisplayList;
-          var currentExerciseDisplayList = filteredExerciseDisplayList!.isNotEmpty ? filteredExerciseDisplayList : exerciseController.exerciseDisplayList;
+          var filteredExerciseDisplayList =
+              exerciseController.filteredExerciseDisplayList;
+          var currentExerciseDisplayList =
+              filteredExerciseDisplayList!.isNotEmpty
+                  ? filteredExerciseDisplayList
+                  : exerciseController.exerciseDisplayList;
 
           return Stack(
             children: [
@@ -76,8 +80,7 @@ class Workout extends StatelessWidget {
                     mainAxisSpacing: 10,
                     crossAxisCount: 2,
                     children: exerciseController.isLoaded
-                        ? currentExerciseDisplayList!
-                            .map((exercise) {
+                        ? currentExerciseDisplayList!.map((exercise) {
                             return ExerciseCard(content: exercise);
                           }).toList()
                         : [CircularProgressIndicator()],
@@ -128,6 +131,10 @@ Widget SearchField() {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Expanded(
             child: TextField(
+              onEditingComplete: () {
+                exerciseController
+                    .searchExerciseDisplayList(_textController.text);
+              },
               controller: _textController,
               decoration: InputDecoration(
                 hintText: 'Search...',
