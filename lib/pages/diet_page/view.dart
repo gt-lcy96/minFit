@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:min_fitness/constants/colors.dart';
 import 'package:min_fitness/mock_data/food_list.dart';
+import 'package:min_fitness/routes/names.dart';
 import 'package:min_fitness/widgets/colored_text.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
 import 'package:min_fitness/widgets/shadow_card_no_height.dart';
@@ -78,7 +79,7 @@ Widget addFoodContent(String title, List<dynamic> foodList) {
                         backgroundColor: AppColors.primaryLightColor,
                         radius: 20,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () { Get.toNamed(AppRoutes.SEARCH_FOOD);},
                             icon: Icon(Icons.add),
                             color: AppColors.onSurfaceTextColor),
                       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:min_fitness/pages/home_page/view.dart';
 import 'package:min_fitness/pages/main_dashboard/view.dart';
+import 'package:min_fitness/pages/search_food_page/search_food.dart';
 import 'package:min_fitness/pages/workout_page/workout_detail.dart';
 
 import 'routes.dart';
@@ -12,6 +13,7 @@ class AppPages {
   static List<String> history = [];
   static String getWorkoutDetail(String id) =>
       '${AppRoutes.WORKOUT_DETAIL}?id=$id';
+  static const SEARCH_FOOD = AppRoutes.SEARCH_FOOD;
 
   static final List<GetPage> routes = [
     // GetPage(
@@ -36,6 +38,10 @@ class AppPages {
       },
     ),
 
+    GetPage(
+      name: AppRoutes.SEARCH_FOOD,
+      page: () => const SearchFoodPage(),
+    ),
 
     // GetPage(
     // name: AppRoutes.HOME,
