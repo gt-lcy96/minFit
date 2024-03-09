@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:min_fitness/constants/colors.dart';
+import 'package:min_fitness/controllers/meal_controller.dart';
 import 'package:min_fitness/mock_data/food_list.dart';
+import 'package:min_fitness/models/food_model.dart';
 import 'package:min_fitness/routes/names.dart';
 import 'package:min_fitness/widgets/colored_text.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
@@ -15,50 +17,52 @@ class DietPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Container(
-            width: Get.width,
-            // height: double.maxFinite,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 30.h,
-                ),
-                addFoodContent('Breakfast', FoodList().breakfastList),
-                SizedBox(
-                  height: 20.h,
-                ),
-                addFoodContent('Lunch', FoodList().lunchList),
-                SizedBox(
-                  height: 20.h,
-                ),
-                addFoodContent('Dinner', FoodList().dinnerList),
-                SizedBox(
-                  height: 20.h,
-                ),
-                addFoodContent('Snack', FoodList().snackList),
-              ],
+        child: GetBuilder<MealController>(builder: (controller) {
+          return SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Container(
+              width: Get.width,
+              // height: double.maxFinite,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  addFoodContent('Breakfast', controller.meal['breakfast'], controller),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  addFoodContent('Lunch', controller.meal['lunch'], controller),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  addFoodContent('Dinner', controller.meal['dinner'], controller),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  addFoodContent('Snack', controller.meal['snack'], controller),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        }),
       ),
     );
   }
 }
 
-Widget addFoodContent(String title, List<dynamic> foodList) {
+Widget addFoodContent(String title, List<FoodModel>? foodList, MealController controller) {
   double totalCalories = 0;
 
-  double calculate_totalCatories(List<dynamic> foodList) {
-    for (var food in foodList) {
-      totalCalories += food['calories'] as double;
+  double calculate_totalCatories(List<FoodModel>? foodList) {
+    for (var food in foodList!) {
+      totalCalories += food.calories as double;
     }
     return totalCalories;
   }
 
-  totalCalories = calculate_totalCatories(foodList);
+  totalCalories = foodList!.isNotEmpty ? calculate_totalCatories(foodList) : 0;
 
   return ShadowedCardNoHeight(
       width: (Get.width * 0.7).w,
@@ -79,7 +83,10 @@ Widget addFoodContent(String title, List<dynamic> foodList) {
                         backgroundColor: AppColors.primaryLightColor,
                         radius: 20,
                         child: IconButton(
-                            onPressed: () { Get.toNamed(AppRoutes.SEARCH_FOOD);},
+                            onPressed: () {
+                              controller.selectedMeal = title.toLowerCase();
+                              Get.toNamed(AppRoutes.SEARCH_FOOD);
+                            },
                             icon: Icon(Icons.add),
                             color: AppColors.onSurfaceTextColor),
                       ),
@@ -115,9 +122,9 @@ Widget addFoodContent(String title, List<dynamic> foodList) {
               child: ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  String food = foodList[index]['food'] ?? '';
-                  String serving_size = foodList[index]['serving_size'] ?? '';
-                  String calories = foodList[index]['calories'].toString() ?? '';
+                  String food = foodList[index].name ?? '';
+                  String serving_size = foodList[index].serving_size ?? '';
+                  String calories = foodList[index].calories.toString() ?? '';
 
                   return Row(
                     mainAxisSize: MainAxisSize.min,
@@ -127,7 +134,11 @@ Widget addFoodContent(String title, List<dynamic> foodList) {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          ColoredText(text: food, color: Colors.black, fontSize: 18, ),
+                          ColoredText(
+                            text: food,
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                           Text(serving_size),
                         ],
                       ),

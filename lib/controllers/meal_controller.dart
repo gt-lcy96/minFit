@@ -15,6 +15,27 @@ class MealController extends GetxController {
   List<FoodModel> _searchedFoodList = [];
   List<FoodModel> get searchedFoodList => _searchedFoodList;
 
+  String _selectedMeal = "";
+  String get selectedMeal => _selectedMeal;
+
+  final Map<String, List<FoodModel>?> _meal = {
+    'breakfast': [],
+    'lunch': [],
+    'dinner': [],
+    'snack': [],
+  };
+  Map<String, List<FoodModel>?> get meal => _meal;
+
+  addMeal(String meal_name, FoodModel food) {
+    _meal[meal_name]!.add(food);
+    update();
+  }
+
+  set selectedMeal (String meal){
+    _selectedMeal = meal;
+    update();
+  }
+
   seacrhFoodList(keyword) async {
     try {
       _foodListIsSearched = false;
@@ -25,7 +46,6 @@ class MealController extends GetxController {
         _searchedFoodList = foodList
             .map((e) => FoodModel.fromMap(e as Map<String, dynamic>))
             .toList();
-        print("_searchedFoodList:  ${_searchedFoodList}");
         update();
       } else {
         print(response.statusCode);
