@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:min_fitness/constants/colors.dart';
 import 'package:min_fitness/controllers/exercise_controller.dart';
+import 'package:min_fitness/controllers/home_controller.dart';
 import 'package:min_fitness/helper/convert_time.dart';
 import 'package:min_fitness/widgets/appIcon_text.dart';
 import 'package:min_fitness/widgets/colored_text.dart';
@@ -23,7 +24,10 @@ Widget addExcerciseContent() {
                 height: 50.h,
               ),
               GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    // change to exercise page
+                    Get.find<HomeController>().selectedIndex = 2;
+                  },
                   child: const Icon(Icons.add,
                       color: AppColors.onSurfaceTextColor)),
             ],
