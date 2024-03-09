@@ -50,7 +50,7 @@ Widget caloriesContent() {
                   CircularPercentIndicator(
                     radius: 60.0,
                     lineWidth: 15.0,
-                    percent: 0.8,
+                    percent: remainingCalories / exerciseController.targetCalories,
                     center: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
