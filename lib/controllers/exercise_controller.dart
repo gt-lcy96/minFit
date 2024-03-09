@@ -15,8 +15,11 @@ class ExerciseController extends GetxController {
   late Duration _exerciseDuration = Duration(hours: 0, minutes: 0);
   Duration get exerciseDuration => _exerciseDuration;
 
-  double _calories = 0;
-  double get calories => _calories;
+  double _targetCalories = 2500;
+  double get targetCalories => _targetCalories;
+
+  double _calories_burned = 0;
+  double get calories_burned => _calories_burned;
 
   int _slider_index = 0;
   int get slider_index => _slider_index;
@@ -65,8 +68,8 @@ class ExerciseController extends GetxController {
     _exerciseDuration += duration;
   }
 
-  set calories(double value) {
-    _calories += value;
+  set calories_burned(double value) {
+    _calories_burned += value;
   }
 
   ExerciseModel? getExerciseDetailByID(String id) {

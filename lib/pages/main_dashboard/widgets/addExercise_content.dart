@@ -41,7 +41,7 @@ Widget addExcerciseContent() {
           ),
           AppIconText(
               icon: Icon(Icons.local_fire_department, color: Colors.redAccent),
-              text: ColoredText(text: '${controller.calories.toStringAsFixed(0)} cal'),
+              text: ColoredText(text: '${controller.calories_burned.toStringAsFixed(0)} cal'),
               spaceBetween: 10),
         ],
       ),

@@ -211,7 +211,7 @@ pick_time(BuildContext context, ExerciseModel exercise_detail) {
       final minute = Duration(minutes: (datetime as DateTime).minute);
       final totolHour = (Duration(hours: (datetime as DateTime).hour) + minute);
       Get.find<ExerciseController>().exerciseDuration = totolHour;
-      Get.find<ExerciseController>().calories = exercise_detail.metValue *
+      Get.find<ExerciseController>().calories_burned = exercise_detail.metValue *
           Get.find<WeightController>().weight *
           (totolHour.inMinutes / 60);
       Get.snackbar(
