@@ -18,6 +18,9 @@ class MealController extends GetxController {
   String _selectedMeal = "";
   String get selectedMeal => _selectedMeal;
 
+  double _caloriesConsumed = 0;
+  double get calcoriesConsumed => _caloriesConsumed;
+
   final Map<String, List<FoodModel>?> _meal = {
     'breakfast': [],
     'lunch': [],
@@ -28,6 +31,7 @@ class MealController extends GetxController {
 
   addMeal(String meal_name, FoodModel food) {
     _meal[meal_name]!.add(food);
+    _caloriesConsumed += food.calories;
     update();
   }
 

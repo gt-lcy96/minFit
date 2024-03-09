@@ -61,15 +61,17 @@ class ExerciseController extends GetxController {
     // _selected_equipment = _exerciseDisplayList![0].equipment;
     _isLoaded = true;
     update();
-    print("_isLoaded:  ${_isLoaded}");
   }
 
   set exerciseDuration(Duration duration) {
     _exerciseDuration += duration;
+    update();
   }
 
   set calories_burned(double value) {
     _calories_burned += value;
+    _targetCalories += value;
+    update();
   }
 
   ExerciseModel? getExerciseDetailByID(String id) {
