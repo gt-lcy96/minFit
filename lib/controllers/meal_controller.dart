@@ -35,6 +35,19 @@ class MealController extends GetxController {
     update();
   }
 
+  foodIsChosen(FoodModel food) async {
+    try {
+      Response response = await foodRepo.foodIsChosen(food);
+      if(response.statusCode == 200) {
+        if(kDebugMode) {
+          print("response.body in foodIsChosen:  ${response.body}");
+        }
+      }
+    } catch (e) {
+      print('error in foodIsChosen: ' + e.toString());
+    }
+  }
+
   set selectedMeal (String meal){
     _selectedMeal = meal;
     update();

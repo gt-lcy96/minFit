@@ -98,6 +98,7 @@ Widget DropDownRow(FoodModel food, MealController controller) {
             child: InkWell(
                 onTap: () {
                   controller.addMeal(controller.selectedMeal, food);
+                  controller.foodIsChosen(food);
                   Get.snackbar("Food Added", "${food.name} added in ${controller.selectedMeal}");
                 },
                 child: Icon(Icons.add))),
