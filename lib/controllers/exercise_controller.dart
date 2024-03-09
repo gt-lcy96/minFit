@@ -12,6 +12,10 @@ class ExerciseController extends GetxController {
   final ExerciseRepo exerciseRepo;
   ExerciseController({required this.exerciseRepo});
 
+  late Duration _exerciseDuration = Duration(hours: 0, minutes: 0);
+  Duration get exerciseDuration => _exerciseDuration;
+  
+
   int _slider_index = 0;
   int get slider_index => _slider_index;
 
@@ -53,6 +57,10 @@ class ExerciseController extends GetxController {
     _isLoaded = true;
     update();
     print("_isLoaded:  ${_isLoaded}");
+  }
+
+  set exerciseDuration(Duration duration) {
+    _exerciseDuration += duration;
   }
 
   ExerciseModel? getExerciseDetailByID(String id) {

@@ -1,9 +1,12 @@
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:min_fitness/constants/colors.dart';
 import 'package:min_fitness/constants/constant.dart';
 import 'package:min_fitness/controllers/exercise_controller.dart';
+import 'package:min_fitness/controllers/weight_controller.dart';
 import 'package:min_fitness/models/exercise_model.dart';
 import 'package:min_fitness/pages/workout_page/view.dart';
 import 'package:min_fitness/widgets/appIcon_text.dart';
@@ -98,14 +101,21 @@ class WorkoutDetail extends StatelessWidget {
                                   Icons.local_fire_department,
                                   size: 50,
                                 ),
-                                text: textRow('Calories / hour: ',
-                                    exercise_detail.metValue.toString())),
+                                text: textRow(
+                                    'Calories / hour: ',
+                                    (exercise_detail.metValue *
+                                            Get.find<WeightController>()
+                                                .weight *
+                                            1)
+                                        .toStringAsFixed(2)
+                                    // exercise_detail.metValue.toString(),
+                                    )),
                             SizedBox(height: 10.h),
                             Expanded(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  AddExerciseButton(),
+                                  AddExerciseButton(context),
                                 ],
                               ),
                             )
@@ -160,10 +170,10 @@ Widget textRow(String title, String description) {
   );
 }
 
-Widget AddExerciseButton() {
+Widget AddExerciseButton(BuildContext context) {
   return InkWell(
     onTap: () {
-      print('detail tapped');
+      pick_time(context);
     },
     child: Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 60.w),
@@ -187,4 +197,32 @@ Widget AddExerciseButton() {
       ),
     ),
   );
+}
+
+pick_time(BuildContext context) {
+  BottomPicker.time(
+    title: 'Select your exercise time',
+    titleStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 15,
+      color: Colors.orange,
+    ),
+    onSubmit: (datetime) {
+      final minute = Duration(minutes: (datetime as DateTime).minute);
+      final totolHour = (Duration(hours: (datetime as DateTime).hour) + minute);
+      Get.find<ExerciseController>().exerciseDuration = totolHour;
+    },
+    onClose: () {
+      print('Picker closed');
+    },
+    bottomPickerTheme: BottomPickerTheme.orange,
+    use24hFormat: true,
+    initialTime: Time(
+      minutes: 23,
+    ),
+    maxTime: Time(
+      hours: 23,
+      minutes: 59,
+    ),
+  ).show(context);
 }
