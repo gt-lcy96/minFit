@@ -37,7 +37,7 @@ class SearchFoodPage extends StatelessWidget {
                 ),
                 controller.foodListIsSearched
                     ? SearchDropDown(controller)
-                    : Container(),
+                    : CircularProgressIndicator(),
               ],
             ),
           ),

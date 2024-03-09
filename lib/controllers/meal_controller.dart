@@ -43,6 +43,7 @@ class MealController extends GetxController {
   seacrhFoodList(keyword) async {
     try {
       _foodListIsSearched = false;
+      update();
       Response response = await foodRepo.searchFoodList(keyword);
       if (response.statusCode == 200) {
         final foodList = response.body['data']['food_list'] as List;
