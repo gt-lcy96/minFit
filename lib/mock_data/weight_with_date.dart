@@ -28,7 +28,7 @@ class WeightOnDate {
     },
     {
       'date': '2024-02-28',
-      'weight': 75,
+      'weight': 95,
     }
   ];
 }

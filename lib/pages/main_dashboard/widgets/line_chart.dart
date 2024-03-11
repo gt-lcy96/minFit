@@ -28,19 +28,10 @@ class LineChartWeightState extends State<LineChartWeight> {
   late double maxX;
   late double std_x;
 
-  final List<double> weight_y = [
-    64,
-    74,
-    74,
-    73,
-    74,
-    75,
-  ];
-
   late List<double> y_range = [];
-  late double weight_max = 100;
-  late double weight_min = 0;
-  late int std = 0;
+  late double maxY;
+  late double minY;
+  late int std_y = 0;
   List y_marks = [];
   int y_mark_counter = 0;
   late List<FlSpot> lineBarData;
@@ -92,16 +83,21 @@ class LineChartWeightState extends State<LineChartWeight> {
     minX = 0;
     maxX = find_max_in_list(xList) + std_x;
 
-    std = calculateStandardDeviation(weight_y).round();
-    weight_max = find_max_in_list(weight_y);
-    weight_min = find_min_in_list(weight_y);
+    final yList = lineBarData.map((FlSpot e) => e.y).toList();
+    std_y = calculateStandardDeviation(yList).round();
+    maxY = find_max_in_list(yList);
+    minY = find_min_in_list(yList);
 
-    double current_y_in_y_mark = weight_min - std;
-    while (current_y_in_y_mark <= weight_max + std) {
+    double current_y_in_y_mark = minY - std_y;
+    while (current_y_in_y_mark <= maxY + std_y) {
       y_marks.add(current_y_in_y_mark);
-      current_y_in_y_mark += std;
+      current_y_in_y_mark += std_y;
     }
-    // print("------------------------------------")
+
+    print("------------------------------------");
+    print("y_marks:  ${y_marks}");
+    print("------------------------------------");
+    
     dateList = weightDate
         .map((Map<String, dynamic> e) => DateTime.parse(e['date']))
         .toList();
