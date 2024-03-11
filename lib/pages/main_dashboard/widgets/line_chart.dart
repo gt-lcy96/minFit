@@ -6,6 +6,8 @@ import 'package:min_fitness/constants/colors.dart';
 import 'dart:math';
 
 import 'package:min_fitness/helper/calculation.dart';
+import 'package:min_fitness/helper/convert_time.dart';
+import 'package:min_fitness/mock_data/weight_with_date.dart';
 
 class LineChartWeight extends StatefulWidget {
   const LineChartWeight({super.key});
@@ -16,19 +18,15 @@ class LineChartWeight extends StatefulWidget {
 
 class LineChartWeightState extends State<LineChartWeight> {
   List<Color> gradientColors = [
-    // AppColors.contentColorCyan,
-    // AppColors.contentColorBlue,
     Colors.cyan,
     Colors.blue,
   ];
 
   final Color mainGridLineColor = Colors.white10;
 
-
-  final double minX = 0;
-  final double maxX = 10;
-
-  final date_x = {2: '15/01', 4: '15/02', 6: '15/03'};
+  late double minX;
+  late double maxX;
+  late double std_x;
 
   final List<double> weight_y = [
     64,
@@ -40,7 +38,6 @@ class LineChartWeightState extends State<LineChartWeight> {
   ];
 
   late List<double> y_range = [];
-
   late double weight_max = 100;
   late double weight_min = 0;
   late int std = 0;
@@ -48,16 +45,52 @@ class LineChartWeightState extends State<LineChartWeight> {
   int y_mark_counter = 0;
   late List<FlSpot> lineBarData;
 
+  // print("------------------------------------")
+  final weightDate = WeightOnDate.weightDate;
+  late List<DateTime> dateList;
+  late DateTime threeMonthsAgo;
+
+  double dateTimeToDouble(DateTime date, DateTime referenceDate) {
+    return date.difference(referenceDate).inDays.toDouble();
+  }
+
+  String formatDate(DateTime dateTime) {
+    // Format the date as 'MM-dd' or any format you prefer
+    return "${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
+    int lineBarCounter = 0;
 
-  int lineBarCounter = 0;
-  lineBarData = weight_y.map((y) {
-    lineBarCounter ++;
-    return FlSpot(lineBarCounter.toDouble(), y);
-  }).toList();
+    // lineBarData = weight_y.map((y) {
+    //   lineBarCounter ++;
+    //   return FlSpot(lineBarCounter.toDouble(), y);
+    // }).toList();
 
+    //calculate threeMonthsAgo from the latestDate for reference date in x axis
+    DateTime latestDate = weightDate
+        .map((Map<String, dynamic> data) => DateTime.parse(data['date']))
+        .reduce((a, b) => a.isAfter(b) ? a : b);
+    threeMonthsAgo =
+        DateTime(latestDate.year, latestDate.month - 3, latestDate.day);
+
+    final autoFilled_date = fillInDates(weightDate);
+    print("autoFilled_date:  ${autoFilled_date}");
+
+    lineBarData = autoFilled_date.map((Map<String, dynamic> e) {
+      final datetime = DateTime.parse(e['date']);
+      final double_date = dateTimeToDouble(datetime, threeMonthsAgo);
+
+      return FlSpot(double_date, e['weight'].toDouble());
+    }).toList();
+
+    final xList = lineBarData.map((FlSpot e) => e.x).toList();
+    print("xList:  ${xList}");
+    std_x = calculateStandardDeviation(xList);
+    // minX = find_min_in_list(xList) - std_x;
+    minX = 0;
+    maxX = find_max_in_list(xList) + std_x;
 
     std = calculateStandardDeviation(weight_y).round();
     weight_max = find_max_in_list(weight_y);
@@ -67,8 +100,12 @@ class LineChartWeightState extends State<LineChartWeight> {
     while (current_y_in_y_mark <= weight_max + std) {
       y_marks.add(current_y_in_y_mark);
       current_y_in_y_mark += std;
-
     }
+    // print("------------------------------------")
+    dateList = weightDate
+        .map((Map<String, dynamic> e) => DateTime.parse(e['date']))
+        .toList();
+    print("dateList:  ${dateList}");
   }
 
   @override
@@ -85,18 +122,16 @@ class LineChartWeightState extends State<LineChartWeight> {
               top: 36,
               bottom: 12,
             ),
-              child: LineChart(
-                // showAvg ? avgData() : mainData(),
-                mainData(),
-              ),
+            child: LineChart(
+              mainData(),
             ),
+          ),
         ),
         SizedBox(
           width: 60,
           height: 34,
           child: TextButton(
-            onPressed: () {
-            },
+            onPressed: () {},
             child: Text(
               'Wght',
               style: TextStyle(
@@ -113,19 +148,27 @@ class LineChartWeightState extends State<LineChartWeight> {
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 16,
+      fontSize: 14,
       color: AppColors.onSurfaceTextColor,
     );
     Widget text;
+    final date = convertDoubleToDate(value, threeMonthsAgo);
+    final formatedText = formatDate(date);
     switch (value.toInt()) {
-      case 2:
-        text = const Text('15/01', style: style);
+      case 30:
+        print("formatedText 30:  ${formatedText}");
+        text = Text(formatedText, style: style);
         break;
-      case 5:
-        text = const Text('01/02', style: style);
+      case 60:
+        print("formatedText 60:  ${formatedText}");
+        
+        text = Text(formatedText, style: style);
         break;
-      case 8:
-        text = const Text('15/02', style: style);
+      case 90:
+        print("formatedText 90:  ${formatedText}");
+        print("maxX:  ${maxX}");
+        print("minX:  ${minX}");
+        text = Text(formatedText, style: style);
         break;
       default:
         text = const Text('', style: style);
@@ -141,7 +184,7 @@ class LineChartWeightState extends State<LineChartWeight> {
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 15,
+      fontSize: 14,
       color: AppColors.onSurfaceTextColor,
     );
     String text;
@@ -152,16 +195,9 @@ class LineChartWeightState extends State<LineChartWeight> {
       }
       text = value.toInt().toString();
       return Text(text, style: style, textAlign: TextAlign.left);
-    }
-
-    // if (value >= 70 && value <= 80 && ) {
-    //     text = value.toInt().toString();
-    //     return Text(text, style: style, textAlign: TextAlign.left);
-    //   }
-    else {
+    } else {
       return Container();
     }
-    // return Text(text, style: style, textAlign: TextAlign.left);
   }
 
   LineChartData mainData() {
