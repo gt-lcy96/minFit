@@ -31,6 +31,7 @@ class LineChartWeightState extends State<LineChartWeight> {
   late List<double> y_range = [];
   late double maxY;
   late double minY;
+  late double quarter_Y;
   late int std_y = 0;
   List y_marks = [];
   int y_mark_counter = 0;
@@ -53,11 +54,6 @@ class LineChartWeightState extends State<LineChartWeight> {
   @override
   void initState() {
     int lineBarCounter = 0;
-
-    // lineBarData = weight_y.map((y) {
-    //   lineBarCounter ++;
-    //   return FlSpot(lineBarCounter.toDouble(), y);
-    // }).toList();
 
     //calculate threeMonthsAgo from the latestDate for reference date in x axis
     DateTime latestDate = weightDate
@@ -88,16 +84,16 @@ class LineChartWeightState extends State<LineChartWeight> {
     maxY = find_max_in_list(yList);
     minY = find_min_in_list(yList);
 
-    double current_y_in_y_mark = minY - std_y;
-    while (current_y_in_y_mark <= maxY + std_y) {
-      y_marks.add(current_y_in_y_mark);
-      current_y_in_y_mark += std_y;
+    find_quater_difference(a, b) {
+      return ((a - b).abs() / 3).round().toDouble();
     }
 
-    print("------------------------------------");
+    quarter_Y = find_quater_difference(minY, maxY);
+    y_marks = [minY-1, minY + quarter_Y, maxY - quarter_Y, maxY+1];
+    y_marks = y_marks.map((e) => e.round().toDouble()).toList();
     print("y_marks:  ${y_marks}");
-    print("------------------------------------");
-    
+    print("yList:  ${yList}");
+
     dateList = weightDate
         .map((Map<String, dynamic> e) => DateTime.parse(e['date']))
         .toList();
@@ -157,7 +153,7 @@ class LineChartWeightState extends State<LineChartWeight> {
         break;
       case 60:
         print("formatedText 60:  ${formatedText}");
-        
+
         text = Text(formatedText, style: style);
         break;
       case 90:
@@ -185,6 +181,7 @@ class LineChartWeightState extends State<LineChartWeight> {
     );
     String text;
 
+    print("value:  ${value}");
     if (value == y_marks[y_mark_counter]) {
       if (y_mark_counter < y_marks.length - 1) {
         y_mark_counter++;
