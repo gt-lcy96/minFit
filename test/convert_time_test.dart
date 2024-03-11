@@ -28,4 +28,75 @@ void main() {
     // Check the weight of the last date is the same as the last input date's weight
     expect(result.last['weight'], equals(75));
   });
+
+  group('fillInDates function', () {
+    test('should fill in dates and weights correctly including leap year', () {
+      final inputData = [
+        {'date': '2024-02-27', 'weight': 73}, // Leap year case
+        {'date': '2024-03-01', 'weight': 74},
+      ];
+      final result = fillInDates(inputData);
+
+      // Ensure February 29th is included
+      var leapDayFound = result.any((day) => day['date'] == '2024-02-29');
+      expect(leapDayFound, isTrue);
+      // // Check leap year date
+      // expect(result[1]['date'], equals('2024-02-28'));
+      // expect(result[1]['weight'], equals(73));
+
+      // // Check if March 1st is correctly placed after February 29th (leap year)
+      // expect(result[2]['date'], equals('2024-03-01'));
+      // expect(result[2]['weight'], equals(74));
+    });
+
+    test('should continue weight until the next entry', () {
+      final inputData = [
+        {'date': '2024-04-15', 'weight': 70},
+        {'date': '2024-04-20', 'weight': 71},
+      ];
+      final result = fillInDates(inputData);
+
+      // Check continuity of weight values
+      expect(result[3]['date'], equals('2024-04-18'));
+      expect(result[3]['weight'], equals(70));
+      expect(result[4]['date'], equals('2024-04-19'));
+      expect(result[4]['weight'], equals(70));
+
+      // Check the date when weight changes
+      expect(result[5]['date'], equals('2024-04-20'));
+      expect(result[5]['weight'], equals(71));
+    });
+
+    test('should handle consecutive days correctly', () {
+      final inputData = [
+        {'date': '2024-05-01', 'weight': 68},
+        {'date': '2024-05-02', 'weight': 69},
+        {'date': '2024-05-03', 'weight': 70},
+      ];
+      final result = fillInDates(inputData);
+
+      // Check consecutive days
+      expect(result[0]['date'], equals('2024-05-01'));
+      expect(result[0]['weight'], equals(68));
+      expect(result[1]['date'], equals('2024-05-02'));
+      expect(result[1]['weight'], equals(69));
+      expect(result[2]['date'], equals('2024-05-03'));
+      expect(result[2]['weight'], equals(70));
+    });
+
+    // test('should fill up to the current date', () {
+    //   final inputData = [
+    //     {'date': '2024-06-01', 'weight': 72},
+    //     // {'date': '2024-06-15', 'weight': 73},
+    //   ];
+    //   final todayString = DateTime.now().toString().substring(0, 10);
+    //   final result = fillInDates(inputData);
+
+    //   // Check the last date is today's date
+    //   expect(result.last['date'], equals(todayString));
+      
+    //   // Check the weight of the last date is the same as the last input date's weight
+    //   // expect(result.last['weight'], equals(73));
+    // });
+  });
 }
