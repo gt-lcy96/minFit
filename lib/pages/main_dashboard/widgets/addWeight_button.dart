@@ -130,6 +130,7 @@ TextStyle descriptionStyle() {
 show_date_picker(BuildContext context) {
   BottomPicker.date(
           title: "Select the date",
+          maxDateTime: DateTime.now(),
           titleStyle: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 15, color: Colors.blue),
           onChange: (index) {
