@@ -12,7 +12,7 @@ DateTime convertDoubleToDate(double value, DateTime referenceDate) {
 
 List<Map<String, dynamic>> fillInDates(List<Map<String, dynamic>> data) {
   List<Map<String, dynamic>> filledData = [];
-  DateTime lastDate = DateTime.parse(data.last['date']);
+  DateTime today = DateTime.now();
 
   for (var i = 0; i < data.length - 1; i++) {
     DateTime currentDate = DateTime.parse(data[i]['date']);
@@ -24,20 +24,21 @@ List<Map<String, dynamic>> fillInDates(List<Map<String, dynamic>> data) {
     for (var j = 1; j < daysApart; j++) {
       DateTime fillDate = currentDate.add(Duration(days: j));
       filledData.add({
-        'date': '${fillDate.year}-${fillDate.month.toString().padLeft(2, '0')}-${fillDate.day.toString().padLeft(2, '0')}',
+        'date': '${fillDate.year.toString().padLeft(4, '0')}-${fillDate.month.toString().padLeft(2, '0')}-${fillDate.day.toString().padLeft(2, '0')}',
         'weight': data[i]['weight'],
       });
     }
   }
 
-  // Add the last original entry
+  // Add the last entry from the original data
   filledData.add(data.last);
 
-  // Fill in the remaining days after the last entry until the last date in the original data
-  DateTime startDate = DateTime.parse(data.last['date']).add(Duration(days: 1));
-  while (startDate.isBefore(lastDate) || startDate.isAtSameMomentAs(lastDate)) {
+  // Fill in the remaining days after the last entry until today's date
+  DateTime lastDataDate = DateTime.parse(data.last['date']);
+  DateTime startDate = lastDataDate.add(Duration(days: 1));
+  while (startDate.isBefore(today)) {
     filledData.add({
-      'date': '${startDate.year}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}',
+      'date': '${startDate.year.toString().padLeft(4, '0')}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}',
       'weight': data.last['weight'],
     });
     startDate = startDate.add(Duration(days: 1));
