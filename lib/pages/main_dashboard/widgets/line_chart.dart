@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:min_fitness/constants/colors.dart';
 import 'dart:math';
 
+import 'package:min_fitness/helper/calculation.dart';
+
 class LineChartWeight extends StatefulWidget {
   const LineChartWeight({super.key});
 
@@ -26,15 +28,6 @@ class LineChartWeightState extends State<LineChartWeight> {
   final double minX = 0;
   final double maxX = 10;
 
-  // late final List<FlSpot> lineBarData = [
-  //   FlSpot(1, 72),
-  //   FlSpot(2, 74),
-  //   FlSpot(3, 78),
-  //   FlSpot(4, 76),
-  //   FlSpot(5, 72),
-  //   FlSpot(6, 74),
-  // ];
-
   final date_x = {2: '15/01', 4: '15/02', 6: '15/03'};
 
   final List<double> weight_y = [
@@ -54,46 +47,6 @@ class LineChartWeightState extends State<LineChartWeight> {
   List y_marks = [];
   int y_mark_counter = 0;
   late List<FlSpot> lineBarData;
-
-  double calculateAverage(List<num> numbers) {
-    if (numbers.isEmpty) {
-      return 0; // Handle the case when the list is empty to avoid division by zero
-    }
-
-    var sum = numbers.reduce((a, b) => a + b);
-    return sum / numbers.length;
-  }
-
-  double calculateStandardDeviation(List<double> data) {
-    // Compute the mean (average) of the data set
-    double mean = data.reduce((a, b) => a + b) / data.length;
-
-    // Compute the squared differences from the mean
-    var squaredDifferences = data.map((value) => pow(value - mean, 2));
-
-    // Compute the average of the squared differences (variance)
-    double variance =
-        squaredDifferences.reduce((a, b) => a + b) / (data.length - 1);
-
-    // Take the square root of the variance to get the standard deviation
-    double standardDeviation = sqrt(variance);
-
-    return standardDeviation;
-  }
-
-  double find_max_in_list(List<double> numbers) {
-    return numbers.reduce(
-        (double value, double element) => value > element ? value : element);
-  }
-
-  double find_min_in_list(List<double> numbers) {
-    return numbers.reduce(
-        (double value, double element) => value < element ? value : element);
-  }
-
-  double calculate_weight_ratio(weight, max_with_bias) {
-    return weight / max_with_bias;
-  }
 
   @override
   void initState() {
