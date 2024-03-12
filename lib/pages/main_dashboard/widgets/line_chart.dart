@@ -37,7 +37,6 @@ class LineChartWeightState extends State<LineChartWeight> {
   int y_mark_counter = 0;
   late List<FlSpot> lineBarData;
 
-  // print("------------------------------------")
   final weightDate = WeightOnDate.weightDate;
   late List<DateTime> dateList;
   late DateTime threeMonthsAgo;
@@ -63,7 +62,6 @@ class LineChartWeightState extends State<LineChartWeight> {
         DateTime(latestDate.year, latestDate.month - 3, latestDate.day);
 
     final autoFilled_date = fillInDates(weightDate);
-    print("autoFilled_date:  ${autoFilled_date}");
 
     lineBarData = autoFilled_date.map((Map<String, dynamic> e) {
       final datetime = DateTime.parse(e['date']);
@@ -73,7 +71,6 @@ class LineChartWeightState extends State<LineChartWeight> {
     }).toList();
 
     final xList = lineBarData.map((FlSpot e) => e.x).toList();
-    print("xList:  ${xList}");
     std_x = calculateStandardDeviation(xList);
     // minX = find_min_in_list(xList) - std_x;
     minX = 0;
@@ -91,13 +88,12 @@ class LineChartWeightState extends State<LineChartWeight> {
     quarter_Y = find_quater_difference(minY, maxY);
     y_marks = [minY-1, minY + quarter_Y, maxY - quarter_Y, maxY+1];
     y_marks = y_marks.map((e) => e.round().toDouble()).toList();
-    print("y_marks:  ${y_marks}");
-    print("yList:  ${yList}");
+
 
     dateList = weightDate
         .map((Map<String, dynamic> e) => DateTime.parse(e['date']))
         .toList();
-    print("dateList:  ${dateList}");
+
   }
 
   @override
@@ -146,20 +142,15 @@ class LineChartWeightState extends State<LineChartWeight> {
     Widget text;
     final date = convertDoubleToDate(value, threeMonthsAgo);
     final formatedText = formatDate(date);
+    
     switch (value.toInt()) {
       case 30:
-        print("formatedText 30:  ${formatedText}");
         text = Text(formatedText, style: style);
         break;
       case 60:
-        print("formatedText 60:  ${formatedText}");
-
         text = Text(formatedText, style: style);
         break;
       case 90:
-        print("formatedText 90:  ${formatedText}");
-        print("maxX:  ${maxX}");
-        print("minX:  ${minX}");
         text = Text(formatedText, style: style);
         break;
       default:
@@ -181,7 +172,6 @@ class LineChartWeightState extends State<LineChartWeight> {
     );
     String text;
 
-    print("value:  ${value}");
     if (value == y_marks[y_mark_counter]) {
       if (y_mark_counter < y_marks.length - 1) {
         y_mark_counter++;
