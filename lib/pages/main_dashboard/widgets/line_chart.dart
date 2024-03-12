@@ -2,12 +2,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:min_fitness/constants/colors.dart';
+import 'package:min_fitness/controllers/weight_controller.dart';
 import 'dart:math';
 
 import 'package:min_fitness/helper/calculation.dart';
 import 'package:min_fitness/helper/convert_time.dart';
 import 'package:min_fitness/mock_data/weight_with_date.dart';
+import 'package:min_fitness/models/weight_model.dart';
 
 class LineChartWeight extends StatefulWidget {
   const LineChartWeight({super.key});
@@ -37,7 +40,8 @@ class LineChartWeightState extends State<LineChartWeight> {
   int y_mark_counter = 0;
   late List<FlSpot> lineBarData;
 
-  final weightDate = WeightOnDate.weightDate;
+  // final weightDate = WeightOnDate.weightDate;
+  // final weightDate = Get.find<WeightController>().weight_with_date;
   late List<DateTime> dateList;
   late DateTime threeMonthsAgo;
 
@@ -52,85 +56,84 @@ class LineChartWeightState extends State<LineChartWeight> {
 
   @override
   void initState() {
-    int lineBarCounter = 0;
-
     //calculate threeMonthsAgo from the latestDate for reference date in x axis
-    DateTime latestDate = weightDate
-        .map((Map<String, dynamic> data) => DateTime.parse(data['date']))
-        .reduce((a, b) => a.isAfter(b) ? a : b);
-    threeMonthsAgo =
-        DateTime(latestDate.year, latestDate.month - 3, latestDate.day);
 
-    final autoFilled_date = fillInDates(weightDate);
-
-    lineBarData = autoFilled_date.map((Map<String, dynamic> e) {
-      final datetime = DateTime.parse(e['date']);
-      final double_date = dateTimeToDouble(datetime, threeMonthsAgo);
-
-      return FlSpot(double_date, e['weight'].toDouble());
-    }).toList();
-
-    final xList = lineBarData.map((FlSpot e) => e.x).toList();
-    std_x = calculateStandardDeviation(xList);
-    // minX = find_min_in_list(xList) - std_x;
-    minX = 0;
-    maxX = find_max_in_list(xList) + std_x;
-
-    final yList = lineBarData.map((FlSpot e) => e.y).toList();
-    std_y = calculateStandardDeviation(yList).round();
-    maxY = find_max_in_list(yList);
-    minY = find_min_in_list(yList);
-
-    find_quater_difference(a, b) {
-      return ((a - b).abs() / 3).round().toDouble();
-    }
-
-    quarter_Y = find_quater_difference(minY, maxY);
-    y_marks = [minY-1, minY + quarter_Y, maxY - quarter_Y, maxY+1];
-    y_marks = y_marks.map((e) => e.round().toDouble()).toList();
-
-
-    dateList = weightDate
-        .map((Map<String, dynamic> e) => DateTime.parse(e['date']))
-        .toList();
-
+    // dateList = weightDate
+    //     .map((Map<String, dynamic> e) => DateTime.parse(e['date']))
+    //     .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.78,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              right: 18,
-              left: 12,
-              // top: 24,
-              top: 36,
-              bottom: 12,
-            ),
-            child: LineChart(
-              mainData(),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 60,
-          height: 34,
-          child: TextButton(
-            onPressed: () {},
-            child: Text(
-              'Wght',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.white.withOpacity(0.5),
+    return GetBuilder<WeightController>(builder: (controller) {
+      DateTime latestDate = controller.weight_with_date
+          .map((WeightModel data) => data.date)
+          .reduce((a, b) => a.isAfter(b) ? a : b);
+      threeMonthsAgo =
+          DateTime(latestDate.year, latestDate.month - 3, latestDate.day);
+
+      final autoFilled_date = fillInDates(controller.weight_with_date);
+
+      lineBarData = autoFilled_date.map((WeightModel e) {
+        final datetime = e.date;
+        final double_date = dateTimeToDouble(datetime, threeMonthsAgo);
+
+        return FlSpot(double_date, e.weight.toDouble());
+      }).toList();
+
+      final xList = lineBarData.map((FlSpot e) => e.x).toList();
+      std_x = calculateStandardDeviation(xList);
+      // minX = find_min_in_list(xList) - std_x;
+      minX = 0;
+      maxX = find_max_in_list(xList) + std_x;
+
+      final yList = lineBarData.map((FlSpot e) => e.y).toList();
+      std_y = calculateStandardDeviation(yList).round();
+      maxY = find_max_in_list(yList);
+      minY = find_min_in_list(yList);
+
+      find_quater_difference(a, b) {
+        return ((a - b).abs() / 3).round().toDouble();
+      }
+
+      quarter_Y = find_quater_difference(minY, maxY);
+      y_marks = [minY - 1, minY + quarter_Y, maxY - quarter_Y, maxY + 1];
+      y_marks = y_marks.map((e) => e.round().toDouble()).toList();
+
+      return Stack(
+        children: <Widget>[
+          AspectRatio(
+            aspectRatio: 1.78,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                right: 18,
+                left: 12,
+                // top: 24,
+                top: 36,
+                bottom: 12,
+              ),
+              child: LineChart(
+                mainData(),
               ),
             ),
           ),
-        ),
-      ],
-    );
+          SizedBox(
+            width: 60,
+            height: 34,
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'Wght',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white.withOpacity(0.5),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
@@ -142,7 +145,7 @@ class LineChartWeightState extends State<LineChartWeight> {
     Widget text;
     final date = convertDoubleToDate(value, threeMonthsAgo);
     final formatedText = formatDate(date);
-    
+
     switch (value.toInt()) {
       case 30:
         text = Text(formatedText, style: style);

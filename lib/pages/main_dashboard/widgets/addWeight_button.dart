@@ -63,6 +63,8 @@ Widget weightBottomSheet(BuildContext context) {
                     child: InkWell(
                         onTap: () {
                           Get.back();
+                          controller.submitWeight();
+                          controller.sortByDate();
                         },
                         child: Icon(Icons.check)),
                   )
@@ -107,7 +109,7 @@ Widget weightBottomSheet(BuildContext context) {
                     Text('Date', style: titleStyle()),
                     InkWell(
                         onTap: () {
-                          show_date_picker(context);
+                        show_date_picker(context);
                         },
                         child: Text(date, style: descriptionStyle())),
                   ],
