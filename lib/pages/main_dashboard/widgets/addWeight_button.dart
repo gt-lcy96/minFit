@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:min_fitness/constants/colors.dart';
 import 'package:min_fitness/controllers/weight_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:min_fitness/models/weight_model.dart';
 
 Widget addWeightButton(BuildContext context) {
   return InkWell(
@@ -63,7 +64,8 @@ Widget weightBottomSheet(BuildContext context) {
                     child: InkWell(
                         onTap: () {
                           Get.back();
-                          controller.submitWeight();
+                          final inputModel = WeightModel(date: controller.created_at, weight: controller.weight);
+                          controller.submitWeight(inputModel);
                           controller.sortByDate();
                         },
                         child: Icon(Icons.check)),
@@ -85,7 +87,7 @@ Widget weightBottomSheet(BuildContext context) {
                             controller: textController,
                             onChanged: (String text) {
                               controller
-                                  .setWeight(double.parse(textController.text));
+                                  .setWeight(textController.text);
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(

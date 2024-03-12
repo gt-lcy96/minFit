@@ -35,7 +35,8 @@ class WeightModel {
 
   String toJson() => json.encode(toMap());
 
-  factory WeightModel.fromJson(String source) => WeightModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory WeightModel.fromJson(String source) =>
+      WeightModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'WeightModel(weight: $weight, date: $date)';
@@ -43,10 +44,8 @@ class WeightModel {
   @override
   bool operator ==(covariant WeightModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.weight == weight &&
-      other.date == date;
+
+    return other.weight == weight && other.date == date;
   }
 
   @override
