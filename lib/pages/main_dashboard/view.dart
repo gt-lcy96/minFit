@@ -6,6 +6,7 @@ import 'package:min_fitness/pages/main_dashboard/widgets/addExercise_content.dar
 import 'package:min_fitness/pages/main_dashboard/widgets/addWeight_button.dart';
 import 'package:min_fitness/pages/main_dashboard/widgets/calories_content.dart';
 import 'package:min_fitness/pages/main_dashboard/widgets/line_chart.dart';
+import 'package:min_fitness/widgets/colored_text.dart';
 import 'package:min_fitness/widgets/shadow_card.dart';
 
 class MainDashboardPage extends StatelessWidget {
@@ -40,8 +41,10 @@ class MainDashboardPage extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      ColoredText(text: 'Weight', fontWeight: FontWeight.bold),
+                      SizedBox(width: 20,),
                       addWeightButton(context),
                     ],
                   ),
